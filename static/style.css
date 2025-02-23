@@ -272,3 +272,26 @@ nav li {
     border-radius: 0.5rem;
     padding: 1rem;
 }
+
+.blog-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.blog-date {
+    margin-right: 1rem;
+    color: #888;
+    min-width: 120px;
+    text-align: right;
+}
+
+.blog-link {
+    color: black;
+    text-decoration: underline;
+}
+
+.blog-link:hover {
+    color: red;
+    text-decoration: underline;
+}

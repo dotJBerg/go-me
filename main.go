@@ -7,6 +7,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
+	"sort"
 
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
@@ -14,8 +16,10 @@ import (
 )
 
 type Post struct {
-	Title   string
-	Content template.HTML
+    PostName string
+    Title    string
+    Date     time.Time
+    Content  template.HTML
 }
 
 type PageData struct {
@@ -37,23 +41,55 @@ func mdToHTML(md []byte) []byte {
 }
 
 func loadMarkdownPosts() ([]Post, error) {
-	var posts []Post
-	files, err := filepath.Glob("posts/*.md")
-	if err != nil {
-		return nil, err
-	}
+    var posts []Post
+    files, err := filepath.Glob("posts/*.md")
+    if err != nil {
+        return nil, err
+    }
 
-	for _, file := range files {
-		content, err := os.ReadFile(file)
-		if err != nil {
-			return nil, err
-		}
-		title := strings.TrimSuffix(filepath.Base(file), ".md")
-		htmlContent := mdToHTML(content)
-		posts = append(posts, Post{Title: title, Content: template.HTML(htmlContent)})
-	}
+    for _, file := range files {
+	postName := strings.TrimSuffix(filepath.Base(file), ".md")
+	
+        content, err := os.ReadFile(file)
+        if err != nil {
+            return nil, err
+        }
+        lines := strings.Split(string(content), "\n")
+        if len(lines) < 2 {
+	    log.Println("Is the file empty?") 
+	    continue
+        }
 
-	return posts, nil
+        // This should grab the title
+        rawTitle := strings.TrimSpace(strings.TrimPrefix(lines[0], "#"))
+        
+	//Improvement: This is a bit weird. Maybe grabbing the date could be simpler or done a better way.
+        rawDate := strings.TrimSpace(lines[1])
+        rawDate = strings.TrimPrefix(rawDate, "<small>")
+        rawDate = strings.TrimSuffix(rawDate, "</small>")
+        rawDate = strings.TrimSpace(rawDate)
+
+        parsedDate, err := time.Parse("2 January 2006", rawDate)
+        if err != nil {
+	    log.Println("No date!") 
+        }
+
+        body := strings.Join(lines[2:], "\n")
+        htmlContent := mdToHTML([]byte(body))
+
+        post := Post{
+	    PostName: postName,
+            Title:    rawTitle,
+            Date:     parsedDate,
+            Content:  template.HTML(htmlContent),
+        }
+        posts = append(posts, post)
+    }
+
+    sort.Slice(posts, func(i, j int) bool {
+        return posts[i].Date.After(posts[j].Date)
+    })
+    return posts, nil
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -79,8 +115,8 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func postHandler(w http.ResponseWriter, r *http.Request) {
-	postTitle := strings.TrimPrefix(r.URL.Path, "/post/")
-	filePath := "posts/" + postTitle + ".md"
+	postName := strings.TrimPrefix(r.URL.Path, "/post/")
+	filePath := "posts/" + postName + ".md"
 
 	content, err := os.ReadFile(filePath)
 	if err != nil {
@@ -89,7 +125,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	htmlContent := mdToHTML(content)
-	post := Post{Title: postTitle, Content: template.HTML(htmlContent)}
+	post := Post{Title: postName, Content: template.HTML(htmlContent)}
 
 	tmpl := template.Must(template.ParseFiles("templates/post.html"))
 	tmpl.Execute(w, post)

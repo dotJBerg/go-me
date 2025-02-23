@@ -15,12 +15,15 @@
                 <li><a href="/blog" class="nav-link active">Blog</a></li>
             </ul>
         </nav>
+
         <div class="content">
             <h1>Blog Posts</h1>
             <ul class="blog-list">
                 {{range.Posts}}
                 <li class="blog-item">
-                    <a href="/post/{{.Title}}" class="blog-link">{{.Title}}</a>
+                    <!-- Format the date as e.g. 23 February 2025 -->
+                    <span class="blog-date">{{ .Date.Format "2 January 2006" }}</span>
+                    <a href="/post/{{ .PostName }}" class="blog-link">{{ .Title }}</a>
                 </li>
                 {{end}}
             </ul>
