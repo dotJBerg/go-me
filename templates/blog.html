@@ -21,7 +21,6 @@
             <ul class="blog-list">
                 {{range.Posts}}
                 <li class="blog-item">
-                    <!-- Format the date as e.g. 23 February 2025 -->
                     <span class="blog-date">{{ .Date.Format "2 January 2006" }}</span>
                     <a href="/post/{{ .PostName }}" class="blog-link">{{ .Title }}</a>
                 </li>

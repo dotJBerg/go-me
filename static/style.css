@@ -295,3 +295,37 @@ nav li {
     color: red;
     text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    display: flex;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    overflow-y: visible;
+    border: none;
+    text-align: center;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .sidebar ul {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .sidebar ul li {
+    display: inline;
+  }
+  
+  .content {
+    width: 95%;
+    margin: 0 auto;
+  }
+}
