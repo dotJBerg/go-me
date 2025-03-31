@@ -99,6 +99,15 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, data)
 }
 
+func contactHandler(w http.ResponseWriter, r *http.Request) {
+	data := PageData{
+		ActivePage: "contact",
+	}
+	tmpl := template.Must(template.ParseFiles("templates/contact.html"))
+	tmpl.Execute(w, data)
+}
+
+
 func blogHandler(w http.ResponseWriter, r *http.Request) {
 	posts, err := loadMarkdownPosts()
 	if err != nil {
@@ -133,6 +142,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/contact", contactHandler)
 	http.HandleFunc("/blog", blogHandler)
 	http.HandleFunc("/post/", postHandler)
 
