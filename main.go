@@ -95,16 +95,16 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	data := PageData{
 		ActivePage: "home",
 	}
-	tmpl := template.Must(template.ParseFiles("templates/index.html"))
-	tmpl.Execute(w, data)
+	tmpl := template.Must(template.ParseFiles("templates/layout.html", "templates/index.html"))
+	tmpl.ExecuteTemplate(w, "layout", data)
 }
 
 func contactHandler(w http.ResponseWriter, r *http.Request) {
 	data := PageData{
 		ActivePage: "contact",
 	}
-	tmpl := template.Must(template.ParseFiles("templates/contact.html"))
-	tmpl.Execute(w, data)
+	tmpl := template.Must(template.ParseFiles("templates/layout.html", "templates/contact.html"))
+	tmpl.ExecuteTemplate(w, "layout", data)
 }
 
 
@@ -118,25 +118,48 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 		ActivePage: "blog",
 		Posts:      posts,
 	}
-	tmpl := template.Must(template.ParseFiles("templates/blog.html"))
-	tmpl.Execute(w, data)
+	tmpl := template.Must(template.ParseFiles("templates/layout.html", "templates/blog.html"))
+	tmpl.ExecuteTemplate(w, "layout", data)
 }
 
 func postHandler(w http.ResponseWriter, r *http.Request) {
-	postName := strings.TrimPrefix(r.URL.Path, "/post/")
-	filePath := "posts/" + postName + ".md"
+    postName := strings.TrimPrefix(r.URL.Path, "/post/")
+    filePath := "posts/" + postName + ".md"
 
-	content, err := os.ReadFile(filePath)
-	if err != nil {
-		http.NotFound(w, r)
-		return
-	}
+    content, err := os.ReadFile(filePath)
+    if err != nil {
+        http.NotFound(w, r)
+        return
+    }
 
-	htmlContent := mdToHTML(content)
-	post := Post{Title: postName, Content: template.HTML(htmlContent)}
+    lines := strings.Split(string(content), "\n")
+    rawTitle := strings.TrimSpace(strings.TrimPrefix(lines[0], "#"))
+    
+    htmlContent := mdToHTML(content)
+    
+    data := struct {
+        ActivePage string
+        Title      string
+        Content    template.HTML
+    }{
+        ActivePage: "blog",
+        Title:      rawTitle,
+        Content:    template.HTML(htmlContent),
+    }
 
-	tmpl := template.Must(template.ParseFiles("templates/post.html"))
-	tmpl.Execute(w, post)
+    tmpl, err := template.ParseFiles("templates/layout.html", "templates/post.html")
+    if err != nil {
+        log.Printf("Template parsing error: %v", err)
+        http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+        return
+    }
+    
+    err = tmpl.ExecuteTemplate(w, "layout", data)
+    if err != nil {
+        log.Printf("Template execution error: %v", err)
+        http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+        return
+    }
 }
 
 func main() {

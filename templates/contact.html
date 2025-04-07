@@ -1,31 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/style.css">
-    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Me</title>
-</head>
-<body>
-    <div class="container">
-        <nav class="sidebar">
-            <h2 class="sidebar-title">Jarrett Goldberg</h2>
-            <ul>
-                <li><a href="/" class="nav-link">About Me</a></li>
-                <li><a href="/blog" class="nav-link">Blog</a></li>
-                <li><a href="/contact" class="nav-link active">Contact Me</a></li>
-            </ul>
-        </nav>
-        <div class="content">
-            <h1>Contact Me</h1>
-            <p>If you have any questions or just want to say hi, feel free to reach out!</p>
-        
-            <div class="contact-info">
-              <p>email me at: <strong>me@dotjberg.com</strong></p>
-              <p>twitter/X: <strong>https://x.com/dotjberg</strong></p>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+{{define "title"}}Contact Me{{end}}
+{{define "content"}}
+<h1>Contact Me</h1>
+<p>If you have any questions or just want to say hi, feel free to reach out!</p>
+
+<div class="contact-info">
+  <p>email me at: <strong>me@dotjberg.com</strong></p>
+  <p>twitter/X: <strong>https://x.com/dotjberg</strong></p>
+</div>
+{{end}}

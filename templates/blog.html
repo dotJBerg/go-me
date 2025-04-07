@@ -1,33 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/style.css" />
-    <title>Blog</title>
-</head>
-<body>
-    <div class="container">
-        <nav class="sidebar">
-            <h2 class="sidebar-title">Jarrett Goldberg</h2>
-            <ul>
-                <li><a href="/" class="nav-link">About Me</a></li>
-                <li><a href="/blog" class="nav-link active">Blog</a></li>
-                <li><a href="/contact" class="nav-link">Contact Me</a></li>
-            </ul>
-        </nav>
+{{define "title"}}Blog{{end}}
+{{define "content"}}
+<h1>Blog Posts</h1>
+<ul class="blog-list">
+    {{range.Posts}}
+    <li class="blog-item">
+        <span class="blog-date">{{ .Date.Format "2 January 2006" }}</span>
+        <a href="/post/{{ .PostName }}" class="blog-link">{{ .Title }}</a>
+    </li>
+    {{end}}
+</ul>
+{{end}}
 
-        <div class="content">
-            <h1>Blog Posts</h1>
-            <ul class="blog-list">
-                {{range.Posts}}
-                <li class="blog-item">
-                    <span class="blog-date">{{ .Date.Format "2 January 2006" }}</span>
-                    <a href="/post/{{ .PostName }}" class="blog-link">{{ .Title }}</a>
-                </li>
-                {{end}}
-            </ul>
-        </div>
-    </div>
-</body>
-</html>

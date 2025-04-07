@@ -1,43 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/style.css">
-    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me</title>
-</head>
-<body>
-    <div class="container">
-        <nav class="sidebar">
-            <h2 class="sidebar-title">Jarrett Goldberg</h2>
-            <ul>
-                <li><a href="/" class="nav-link active">About Me</a></li>
-                <li><a href="/blog" class="nav-link">Blog</a></li>
-                <li><a href="/contact" class="nav-link">Contact Me</a></li>
-            </ul>
-        </nav>
-        <div class="content">
-            <h1>About Me</h1>
-            <p>
-              Hi! I’m Jarrett Goldberg, a programmer with a love for technology. Whether it’s code, computers, or cool new electronic I am always fascinated in learning more. I’ve always known I wanted to be a programmer, and I’m grateful to be living that dream today!
-            </p>
-            <p>
-              Outside of coding, I have a deep love for video games, movies, and going to the theater. There’s something special about experiencing a film on the big screen, and I try to do it as often as I can.
+{{define "title"}}About Me{{end}}
+{{define "content"}}
+  <h1>About Me</h1>
+  <p>
+    Hi! I’m Jarrett Goldberg, a programmer with a love for technology. Whether it’s code, computers, or cool new electronic I am always fascinated in learning more. I’ve always known I wanted to be a programmer, and I’m grateful to be living that dream today!
+  </p>
+  <p>
+    Outside of coding, I have a deep love for video games, movies, and going to the theater. There’s something special about experiencing a film on the big screen, and I try to do it as often as I can.
 
-              I’m also fascinated by space. Whether it’s reading about the cosmos, watching space documentaries, or just staring up at the night sky, I find it endlessly inspiring.
-            </p>
-            <p>
-              When I do step away from my screen, I enjoy hiking and traveling. My favorite city so far has been Seattle—I love its mix of nature and city life. It also has a wide variety of amazing food. And when it comes to non-city destinations, Bar Harbor, Maine, holds a special place in my heart. There’s nothing quite like the views along the coastline.
+    I’m also fascinated by space. Whether it’s reading about the cosmos, watching space documentaries, or just staring up at the night sky, I find it endlessly inspiring.
+  </p>
+  <p>
+    When I do step away from my screen, I enjoy hiking and traveling. My favorite city so far has been Seattle—I love its mix of nature and city life. It also has a wide variety of amazing food. And when it comes to non-city destinations, Bar Harbor, Maine, holds a special place in my heart. There’s nothing quite like the views along the coastline.
 
-              I also love reading. My favorite book tends to change depending on what I’ve read recently, but if I had to choose, Kafka on the Shore by Haruki Murakami and Do Androids Dream of Electric Sheep? by Philip K. Dick stand out as all-time favorites.
-            </p>
-            <p>
-              This blog is just a space for me to write about whatever interests me—mostly tech-related topics, but who knows? Maybe I’ll write about a book, a movie, or a travel experience at some point.
+    I also love reading. My favorite book tends to change depending on what I’ve read recently, but if I had to choose, Kafka on the Shore by Haruki Murakami and Do Androids Dream of Electric Sheep? by Philip K. Dick stand out as all-time favorites.
+  </p>
+  <p>
+    This blog is just a space for me to write about whatever interests me—mostly tech-related topics, but who knows? Maybe I’ll write about a book, a movie, or a travel experience at some point.
 
-              If you’ve made it this far, thanks for reading!
-            </p>
-        </div>
-    </div>
-</body>
-</html>
+    If you’ve made it this far, thanks for reading!
+  </p>
+{{end}}

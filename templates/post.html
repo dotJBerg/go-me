@@ -1,27 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="/static/style.css" />
-    <title>{{ .Title }}</title>
-</head>
-<body>
-    <div class="container">
-        <nav class="sidebar">
-            <h2 class="sidebar-title">Jarrett Goldberg</h2>
-            <ul>
-                <li><a href="/" class="nav-link">About Me</a></li>
-                <li><a href="/blog" class="nav-link active">Blog</a></li>
-            </ul>
-        </nav>
-        <div class="content">
-            <div>
-                {{ .Content }}
-            </div>
-            <br />
-            <a href="/blog" class="nav-link">Back to Blog List</a>
-        </div>
-    </div>
-</body>
-</html>
+{{define "title"}}{{ .Title }}{{end}}
+{{define "content"}}
+<div>
+    {{ .Content }}
+</div>
+<br />
+<a href="/blog" class="nav-link">Back to Blog List</a>
+{{end}}
